@@ -29,7 +29,7 @@ export default function Login() {
           description: "Welcome back!",
         });
         // Redirect to dashboard
-        window.location.href = "/";
+        window.location.href = "/dashboard";
       } else {
         toast({
           title: "Login failed",
