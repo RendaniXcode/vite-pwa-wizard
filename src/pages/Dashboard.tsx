@@ -36,54 +36,85 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-background p-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold">Welcome back, {currentUser.firstName}!</h1>
-            <p className="text-muted-foreground">Here's your sales dashboard</p>
+    <div className="min-h-screen bg-background">
+      {/* Space for phone notch */}
+      <div className="h-12 bg-gradient-to-r from-primary to-primary/80"></div>
+      
+      <div className="px-6 py-8">
+        <div className="max-w-md mx-auto space-y-8">
+          {/* Header Section */}
+          <div className="text-center space-y-2">
+            <h1 className="text-2xl font-bold text-foreground">
+              Welcome back, {currentUser.firstName}!
+            </h1>
+            <p className="text-muted-foreground text-sm">
+              Here's your sales dashboard
+            </p>
+            <div className="flex justify-end mt-4">
+              <Button 
+                onClick={handleLogout} 
+                variant="outline" 
+                size="sm"
+                className="text-xs"
+              >
+                Logout
+              </Button>
+            </div>
           </div>
-          <Button onClick={handleLogout} variant="outline">
-            Logout
-          </Button>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Sales</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">Manage your sales records</p>
-              <Button className="mt-4 w-full" onClick={() => navigate("/sales")}>
-                View Sales
-              </Button>
-            </CardContent>
-          </Card>
+          {/* Cards Section */}
+          <div className="space-y-4">
+            <Card className="border-0 shadow-sm bg-card/50 backdrop-blur-sm">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-xl font-semibold">Sales</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0 space-y-4">
+                <p className="text-muted-foreground text-sm">
+                  Manage your sales records
+                </p>
+                <Button 
+                  className="w-full h-12 bg-primary hover:bg-primary/90" 
+                  onClick={() => navigate("/sales")}
+                >
+                  View Sales
+                </Button>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Customers</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">Manage your customer base</p>
-              <Button className="mt-4 w-full" onClick={() => navigate("/customers")}>
-                View Customers
-              </Button>
-            </CardContent>
-          </Card>
+            <Card className="border-0 shadow-sm bg-card/50 backdrop-blur-sm">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-xl font-semibold">Customers</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0 space-y-4">
+                <p className="text-muted-foreground text-sm">
+                  Manage your customer base
+                </p>
+                <Button 
+                  className="w-full h-12 bg-primary hover:bg-primary/90" 
+                  onClick={() => navigate("/customers")}
+                >
+                  View Customers
+                </Button>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Orders</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">Track and manage orders</p>
-              <Button className="mt-4 w-full" onClick={() => navigate("/orders")}>
-                View Orders
-              </Button>
-            </CardContent>
-          </Card>
+            <Card className="border-0 shadow-sm bg-card/50 backdrop-blur-sm">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-xl font-semibold">Orders</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0 space-y-4">
+                <p className="text-muted-foreground text-sm">
+                  Track and manage orders
+                </p>
+                <Button 
+                  className="w-full h-12 bg-primary hover:bg-primary/90" 
+                  onClick={() => navigate("/orders")}
+                >
+                  View Orders
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
