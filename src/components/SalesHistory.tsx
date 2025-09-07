@@ -60,7 +60,7 @@ export function SalesHistory({ sales, onBack }: SalesHistoryProps) {
                       {sale.quantity} dozen{sale.quantity !== 1 ? "s" : ""}
                     </span>
                     <span className="text-muted-foreground">
-                      ${sale.pricePerDozen}/dozen
+                      R{sale.pricePerDozen}/dozen
                     </span>
                   </div>
                   <p className="text-xs text-muted-foreground mt-2">
@@ -69,7 +69,7 @@ export function SalesHistory({ sales, onBack }: SalesHistoryProps) {
                 </div>
                 <div className="text-right">
                   <p className="text-2xl font-bold text-app-success">
-                    ${sale.total.toFixed(2)}
+                    R{sale.total.toFixed(2)}
                   </p>
                 </div>
               </div>

@@ -111,7 +111,7 @@ export function RecordSale({ onBack, onSave }: RecordSaleProps) {
 
             <div>
               <Label htmlFor="price" className="text-sm font-medium text-foreground">
-                Price per Dozen ($)
+                Price per Dozen (R)
               </Label>
               <Input
                 id="price"
@@ -128,7 +128,7 @@ export function RecordSale({ onBack, onSave }: RecordSaleProps) {
               <div className="text-center">
                 <p className="text-sm text-muted-foreground">Total Sale</p>
                 <p className="text-3xl font-bold text-app-success">
-                  ${(eggQuantity * pricePerDozen).toFixed(2)}
+                  R{(eggQuantity * pricePerDozen).toFixed(2)}
                 </p>
               </div>
             </div>

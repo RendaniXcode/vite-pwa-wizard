@@ -121,7 +121,7 @@ const Index = () => {
         <div className="grid grid-cols-2 gap-4">
           <StatCard
             title="Total Revenue"
-            value={`$${totalRevenue.toFixed(2)}`}
+            value={`R${totalRevenue.toFixed(2)}`}
             icon={<DollarSign />}
             trend="+12.5%"
             trendUp={true}
@@ -221,7 +221,7 @@ const Index = () => {
               <div>
                 <p className="text-sm opacity-90">Revenue Today</p>
                 <p className="text-2xl font-bold">
-                  ${sales.filter(sale => {
+                  R{sales.filter(sale => {
                     const today = new Date().toDateString();
                     return new Date(sale.date).toDateString() === today;
                   }).reduce((sum, sale) => sum + sale.total, 0).toFixed(2)}
