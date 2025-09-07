@@ -1,16 +1,7 @@
+import { Sale } from "@/types";
 import { MobileCard } from "@/components/MobileCard";
 import { Button } from "@/components/ui/button";
 import { Clock, CheckCircle, XCircle } from "lucide-react";
-
-interface Sale {
-  id: number;
-  customerName: string;
-  customerPhone: string;
-  quantity: number;
-  pricePerDozen: number;
-  total: number;
-  date: string;
-}
 
 interface SalesHistoryProps {
   sales: Sale[];
@@ -55,7 +46,7 @@ export function SalesHistory({ sales, onBack }: SalesHistoryProps) {
                     <h3 className="font-semibold text-foreground">{sale.customerName}</h3>
                   </div>
                   <p className="text-sm text-muted-foreground mb-2">{sale.customerPhone}</p>
-                  <div className="flex items-center gap-4 text-sm">
+                  <div className="flex items-center gap-4 text-sm mb-2">
                     <span className="text-muted-foreground">
                       {sale.quantity} dozen{sale.quantity !== 1 ? "s" : ""}
                     </span>
@@ -63,7 +54,12 @@ export function SalesHistory({ sales, onBack }: SalesHistoryProps) {
                       R{sale.pricePerDozen}/dozen
                     </span>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-2">
+                  {sale.location && (
+                    <p className="text-xs text-muted-foreground mb-2">
+                      📍 {sale.location.neighborhood}, {sale.location.metro}
+                    </p>
+                  )}
+                  <p className="text-xs text-muted-foreground">
                     {formatDate(sale.date)}
                   </p>
                 </div>

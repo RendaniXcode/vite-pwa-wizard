@@ -32,6 +32,11 @@ export interface Sale {
   pricePerDozen: number;
   total: number;
   paymentMethod: "cash" | "credit";
+  location: {
+    province: string;
+    metro: string;
+    neighborhood: string;
+  };
   date: string;
   notes?: string;
 }

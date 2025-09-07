@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { MobileCard } from "@/components/MobileCard";
+import { getProvinces, getMetros, getNeighborhoods } from "@/data/locations";
 import { ArrowLeft, Plus, Minus, User, History, CreditCard } from "lucide-react";
 
 interface RecordSaleProps {
@@ -26,6 +27,11 @@ export function RecordSale({ onBack, onSave, customers, onSaveCustomer }: Record
   const [selectedProductId, setSelectedProductId] = useState("large-18");
   const [quantity, setQuantity] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState<"cash" | "credit">("cash");
+  const [location, setLocation] = useState({
+    province: 'Gauteng',
+    metro: '',
+    neighborhood: ''
+  });
   const [notes, setNotes] = useState("");
   const [showCustomerHistory, setShowCustomerHistory] = useState(false);
 
@@ -69,6 +75,12 @@ export function RecordSale({ onBack, onSave, customers, onSaveCustomer }: Record
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Validation
+    if (!location.province || !location.metro || !location.neighborhood) {
+      alert("Please select complete location information (Province, Metro, and Neighborhood)");
+      return;
+    }
+    
     let customerId = selectedCustomerId;
     const customerName = `${firstName} ${lastName}`.trim();
     const finalBusinessType = businessType === "other" ? customBusinessType : businessType;
@@ -111,6 +123,7 @@ export function RecordSale({ onBack, onSave, customers, onSaveCustomer }: Record
       pricePerDozen: selectedProduct?.basePrice || 0,
       total,
       paymentMethod,
+      location,
       date: new Date().toISOString(),
       notes,
     };
@@ -128,6 +141,7 @@ export function RecordSale({ onBack, onSave, customers, onSaveCustomer }: Record
     setCustomBusinessType("");
     setQuantity(1);
     setPaymentMethod("cash");
+    setLocation({ province: 'Gauteng', metro: '', neighborhood: '' });
     setNotes("");
     onBack();
   };
@@ -302,25 +316,100 @@ export function RecordSale({ onBack, onSave, customers, onSaveCustomer }: Record
                   </Button>
                 </div>
               </div>
+            </div>
+          </MobileCard>
 
-              {/* Payment Method */}
+          {/* Location Selection */}
+          <MobileCard>
+            <div className="space-y-4">
+              <Label className="text-sm font-medium text-foreground">Sale Location</Label>
+              
+              {/* Province Selection */}
               <div>
-                <Label className="text-sm font-medium text-foreground">Payment Method</Label>
-                <Select value={paymentMethod} onValueChange={(value: "cash" | "credit") => setPaymentMethod(value)}>
+                <Label className="text-xs text-muted-foreground">Province</Label>
+                <Select value={location.province} onValueChange={(value) => setLocation({
+                  province: value,
+                  metro: '',
+                  neighborhood: ''
+                })}>
                   <SelectTrigger className="mt-1">
-                    <SelectValue />
+                    <SelectValue placeholder="Select Province" />
                   </SelectTrigger>
                   <SelectContent className="bg-background border shadow-lg z-50">
-                    <SelectItem value="cash">Cash Payment</SelectItem>
-                    <SelectItem value="credit">Credit (Pay Later)</SelectItem>
+                    {getProvinces().map((province) => (
+                      <SelectItem key={province} value={province}>
+                        {province}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
-                {paymentMethod === "credit" && selectedCustomer && (
-                  <div className="mt-2 text-xs text-muted-foreground">
-                    Credit available: R{(selectedCustomer.creditLimit - selectedCustomer.outstandingBalance).toFixed(2)}
-                  </div>
-                )}
               </div>
+
+              {/* Metro Selection */}
+              {location.province && (
+                <div>
+                  <Label className="text-xs text-muted-foreground">Metro/City</Label>
+                  <Select value={location.metro} onValueChange={(value) => setLocation({
+                    ...location,
+                    metro: value,
+                    neighborhood: ''
+                  })}>
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Select Metro/City" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border shadow-lg z-50">
+                      {getMetros(location.province).map((metro) => (
+                        <SelectItem key={metro} value={metro}>
+                          {metro}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
+              {/* Neighborhood Selection */}
+              {location.metro && (
+                <div>
+                  <Label className="text-xs text-muted-foreground">Neighborhood</Label>
+                  <Select value={location.neighborhood} onValueChange={(value) => setLocation({
+                    ...location,
+                    neighborhood: value
+                  })}>
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Select Neighborhood" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border shadow-lg z-50">
+                      {getNeighborhoods(location.province, location.metro).map((neighborhood) => (
+                        <SelectItem key={neighborhood} value={neighborhood}>
+                          {neighborhood}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+            </div>
+          </MobileCard>
+
+          {/* Payment Method */}
+          <MobileCard>
+            <div className="space-y-4">
+              <Label className="text-sm font-medium text-foreground">Payment Method</Label>
+              <Select value={paymentMethod} onValueChange={(value: "cash" | "credit") => setPaymentMethod(value)}>
+                <SelectTrigger className="mt-1">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-background border shadow-lg z-50">
+                  <SelectItem value="cash">Cash Payment</SelectItem>
+                  <SelectItem value="credit">Credit (Pay Later)</SelectItem>
+                </SelectContent>
+              </Select>
+              {paymentMethod === "credit" && selectedCustomer && (
+                <div className="mt-2 text-xs text-muted-foreground">
+                  Credit available: R{(selectedCustomer.creditLimit - selectedCustomer.outstandingBalance).toFixed(2)}
+                </div>
+              )}
 
               {/* Notes */}
               <div>
