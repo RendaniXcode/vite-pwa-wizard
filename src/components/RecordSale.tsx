@@ -76,12 +76,7 @@ export function RecordSale({ onBack, onSave, customers, onSaveCustomer }: Record
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validation
-    if (!location.province || !location.metro || !location.neighborhood) {
-      alert("Please select complete location information (Province, Metro, and Neighborhood)");
-      return;
-    }
-    
+    // Validation - only check if neighborhood is "Other" and no custom name provided
     if (location.neighborhood === "Other" && !customNeighborhood.trim()) {
       alert("Please enter the neighborhood name");
       return;
@@ -232,13 +227,11 @@ export function RecordSale({ onBack, onSave, customers, onSaveCustomer }: Record
                       placeholder="First name"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      required
                     />
                     <Input
                       placeholder="Last name"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      required
                     />
                   </div>
                   <Input
@@ -246,7 +239,6 @@ export function RecordSale({ onBack, onSave, customers, onSaveCustomer }: Record
                     type="tel"
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
-                    required
                   />
                   <Input
                     placeholder="Email (optional)"
@@ -272,7 +264,6 @@ export function RecordSale({ onBack, onSave, customers, onSaveCustomer }: Record
                         placeholder="Enter business type"
                         value={customBusinessType}
                         onChange={(e) => setCustomBusinessType(e.target.value)}
-                        required
                       />
                     )}
                   </div>
@@ -404,7 +395,6 @@ export function RecordSale({ onBack, onSave, customers, onSaveCustomer }: Record
                         placeholder="Enter neighborhood name"
                         value={customNeighborhood}
                         onChange={(e) => setCustomNeighborhood(e.target.value)}
-                        required
                       />
                     )}
                   </div>
