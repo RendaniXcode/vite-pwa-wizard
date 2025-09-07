@@ -19,7 +19,8 @@ import {
   ShoppingCart,
   Egg,
   LogIn,
-  Settings
+  Settings,
+  LogOut
 } from "lucide-react";
 
 type View = "dashboard" | "recordSale" | "createOrder" | "salesHistory" | "orderHistory" | "customerList" | "customerProfile";
@@ -32,6 +33,12 @@ const Index = () => {
   const [customers, setCustomers] = useState<any[]>([]);
   const [selectedCustomerId, setSelectedCustomerId] = useState<string>("");
   const [currentUser, setCurrentUser] = useState<any>(null);
+
+  const handleLogout = () => {
+    localStorage.removeItem("currentUser");
+    setCurrentUser(null);
+    navigate("/login");
+  };
 
   // Check if user is logged in
   useEffect(() => {
@@ -189,9 +196,19 @@ const Index = () => {
           </div>
           <div className="flex items-center gap-2">
             {currentUser ? (
-              <div className="text-right">
-                <p className="text-sm opacity-90">Welcome</p>
-                <p className="text-lg font-bold">{currentUser.firstName}</p>
+              <div className="flex items-center gap-3">
+                <div className="text-right">
+                  <p className="text-sm opacity-90">Welcome</p>
+                  <p className="text-lg font-bold">{currentUser.firstName}</p>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="text-primary-foreground hover:bg-white/20"
+                >
+                  <LogOut className="w-4 h-4" />
+                </Button>
               </div>
             ) : (
               <Button
