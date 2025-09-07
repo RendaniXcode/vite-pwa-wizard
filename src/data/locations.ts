@@ -139,7 +139,8 @@ export const getMetros = (province: string): string[] => {
 };
 
 export const getNeighborhoods = (province: string, metro: string): string[] => {
-  return locationData[province]?.[metro] || [];
+  const neighborhoods = locationData[province]?.[metro] || [];
+  return [...neighborhoods, "Other"];
 };
 
 export const getProvinces = (): string[] => {

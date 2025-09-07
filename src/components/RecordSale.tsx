@@ -32,6 +32,7 @@ export function RecordSale({ onBack, onSave, customers, onSaveCustomer }: Record
     metro: '',
     neighborhood: ''
   });
+  const [customNeighborhood, setCustomNeighborhood] = useState("");
   const [notes, setNotes] = useState("");
   const [showCustomerHistory, setShowCustomerHistory] = useState(false);
 
@@ -81,6 +82,11 @@ export function RecordSale({ onBack, onSave, customers, onSaveCustomer }: Record
       return;
     }
     
+    if (location.neighborhood === "Other" && !customNeighborhood.trim()) {
+      alert("Please enter the neighborhood name");
+      return;
+    }
+    
     let customerId = selectedCustomerId;
     const customerName = `${firstName} ${lastName}`.trim();
     const finalBusinessType = businessType === "other" ? customBusinessType : businessType;
@@ -123,7 +129,10 @@ export function RecordSale({ onBack, onSave, customers, onSaveCustomer }: Record
       pricePerDozen: selectedProduct?.basePrice || 0,
       total,
       paymentMethod,
-      location,
+      location: {
+        ...location,
+        neighborhood: location.neighborhood === "Other" ? customNeighborhood : location.neighborhood
+      },
       date: new Date().toISOString(),
       notes,
     };
@@ -142,6 +151,7 @@ export function RecordSale({ onBack, onSave, customers, onSaveCustomer }: Record
     setQuantity(1);
     setPaymentMethod("cash");
     setLocation({ province: 'Gauteng', metro: '', neighborhood: '' });
+    setCustomNeighborhood("");
     setNotes("");
     onBack();
   };
@@ -372,21 +382,32 @@ export function RecordSale({ onBack, onSave, customers, onSaveCustomer }: Record
               {location.metro && (
                 <div>
                   <Label className="text-xs text-muted-foreground">Neighborhood</Label>
-                  <Select value={location.neighborhood} onValueChange={(value) => setLocation({
-                    ...location,
-                    neighborhood: value
-                  })}>
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="Select Neighborhood" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-background border shadow-lg z-50">
-                      {getNeighborhoods(location.province, location.metro).map((neighborhood) => (
-                        <SelectItem key={neighborhood} value={neighborhood}>
-                          {neighborhood}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <div className="space-y-2">
+                    <Select value={location.neighborhood} onValueChange={(value) => setLocation({
+                      ...location,
+                      neighborhood: value
+                    })}>
+                      <SelectTrigger className="mt-1">
+                        <SelectValue placeholder="Select Neighborhood" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-background border shadow-lg z-50">
+                        {getNeighborhoods(location.province, location.metro).map((neighborhood) => (
+                          <SelectItem key={neighborhood} value={neighborhood}>
+                            {neighborhood}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    
+                    {location.neighborhood === "Other" && (
+                      <Input
+                        placeholder="Enter neighborhood name"
+                        value={customNeighborhood}
+                        onChange={(e) => setCustomNeighborhood(e.target.value)}
+                        required
+                      />
+                    )}
+                  </div>
                 </div>
               )}
             </div>
