@@ -113,11 +113,19 @@ const Index = () => {
     );
   }
 
+  const handleUpdateOrder = (updatedOrder: any) => {
+    const updatedOrders = orders.map(order => 
+      order.id === updatedOrder.id ? updatedOrder : order
+    );
+    setOrders(updatedOrders);
+  };
+
   if (currentView === "orderHistory") {
     return (
       <OrderHistory 
         orders={orders}
         onBack={() => setCurrentView("dashboard")}
+        onUpdateOrder={handleUpdateOrder}
       />
     );
   }
@@ -182,6 +190,8 @@ const Index = () => {
             icon={<DollarSign />}
             trend="+12.5%"
             trendUp={true}
+            className="cursor-pointer hover:scale-105 transition-transform"
+            onClick={() => setCurrentView('salesHistory')}
           />
           <StatCard
             title="Dozens Sold"
@@ -189,16 +199,22 @@ const Index = () => {
             icon={<Package />}
             trend="+8.2%"
             trendUp={true}
+            className="cursor-pointer hover:scale-105 transition-transform"
+            onClick={() => setCurrentView('salesHistory')}
           />
           <StatCard
             title="Customers"
             value={totalCustomers}
             icon={<Users />}
+            className="cursor-pointer hover:scale-105 transition-transform"
+            onClick={() => setCurrentView('customerList')}
           />
           <StatCard
             title="Pending Orders"
             value={pendingOrders}
             icon={<TrendingUp />}
+            className="cursor-pointer hover:scale-105 transition-transform"
+            onClick={() => setCurrentView('orderHistory')}
           />
         </div>
 

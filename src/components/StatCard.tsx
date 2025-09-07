@@ -7,11 +7,15 @@ interface StatCardProps {
   trend?: string;
   trendUp?: boolean;
   className?: string;
+  onClick?: () => void;
 }
 
-export function StatCard({ title, value, icon, trend, trendUp, className = "" }: StatCardProps) {
+export function StatCard({ title, value, icon, trend, trendUp, className = "", onClick }: StatCardProps) {
   return (
-    <div className={`bg-gradient-card rounded-xl p-4 shadow-mobile border border-border ${className}`}>
+    <div 
+      className={`bg-gradient-card rounded-xl p-4 shadow-mobile border border-border ${onClick ? 'cursor-pointer hover:shadow-card' : ''} ${className}`}
+      onClick={onClick}
+    >
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <p className="text-sm font-medium text-muted-foreground">{title}</p>
