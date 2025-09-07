@@ -6,6 +6,8 @@ import { RecordSale } from "@/components/RecordSale";
 import { CreateOrder } from "@/components/CreateOrder";
 import { SalesHistory } from "@/components/SalesHistory";
 import { OrderHistory } from "@/components/OrderHistory";
+import { CustomerList } from "@/components/CustomerList";
+import { CustomerProfile } from "@/components/CustomerProfile";
 import { 
   DollarSign, 
   Package, 
@@ -17,23 +19,29 @@ import {
   Egg
 } from "lucide-react";
 
-type View = "dashboard" | "recordSale" | "createOrder" | "salesHistory" | "orderHistory";
+type View = "dashboard" | "recordSale" | "createOrder" | "salesHistory" | "orderHistory" | "customerList" | "customerProfile";
 
 const Index = () => {
   const [currentView, setCurrentView] = useState<View>("dashboard");
   const [sales, setSales] = useState<any[]>([]);
   const [orders, setOrders] = useState<any[]>([]);
+  const [customers, setCustomers] = useState<any[]>([]);
+  const [selectedCustomerId, setSelectedCustomerId] = useState<string>("");
 
   // Load data from localStorage on mount
   useEffect(() => {
     const savedSales = localStorage.getItem("fieldSales");
     const savedOrders = localStorage.getItem("fieldOrders");
+    const savedCustomers = localStorage.getItem("fieldCustomers");
     
     if (savedSales) {
       setSales(JSON.parse(savedSales));
     }
     if (savedOrders) {
       setOrders(JSON.parse(savedOrders));
+    }
+    if (savedCustomers) {
+      setCustomers(JSON.parse(savedCustomers));
     }
   }, []);
 
@@ -46,12 +54,29 @@ const Index = () => {
     localStorage.setItem("fieldOrders", JSON.stringify(orders));
   }, [orders]);
 
+  useEffect(() => {
+    localStorage.setItem("fieldCustomers", JSON.stringify(customers));
+  }, [customers]);
+
   const handleSaveSale = (sale: any) => {
     setSales([sale, ...sales]);
   };
 
   const handleSaveOrder = (order: any) => {
     setOrders([order, ...orders]);
+  };
+
+  const handleSaveCustomer = (customer: any) => {
+    const existingCustomerIndex = customers.findIndex(c => c.id === customer.id);
+    if (existingCustomerIndex >= 0) {
+      // Update existing customer
+      const updatedCustomers = [...customers];
+      updatedCustomers[existingCustomerIndex] = customer;
+      setCustomers(updatedCustomers);
+    } else {
+      // Add new customer
+      setCustomers([customer, ...customers]);
+    }
   };
 
   const totalRevenue = sales.reduce((sum, sale) => sum + sale.total, 0);
@@ -64,6 +89,8 @@ const Index = () => {
       <RecordSale 
         onBack={() => setCurrentView("dashboard")}
         onSave={handleSaveSale}
+        customers={customers}
+        onSaveCustomer={handleSaveCustomer}
       />
     );
   }
@@ -91,6 +118,36 @@ const Index = () => {
       <OrderHistory 
         orders={orders}
         onBack={() => setCurrentView("dashboard")}
+      />
+    );
+  }
+
+  if (currentView === "customerList") {
+    return (
+      <CustomerList 
+        customers={customers}
+        onBack={() => setCurrentView("dashboard")}
+        onCustomerSelect={(customerId) => {
+          setSelectedCustomerId(customerId);
+          setCurrentView("customerProfile");
+        }}
+      />
+    );
+  }
+
+  if (currentView === "customerProfile") {
+    const selectedCustomer = customers.find(c => c.id === selectedCustomerId);
+    if (!selectedCustomer) {
+      setCurrentView("customerList");
+      return null;
+    }
+    
+    return (
+      <CustomerProfile 
+        customer={selectedCustomer}
+        sales={sales}
+        onBack={() => setCurrentView("customerList")}
+        onUpdateCustomer={handleSaveCustomer}
       />
     );
   }
@@ -197,6 +254,21 @@ const Index = () => {
                 <div className="text-left">
                   <p className="font-medium">Order History</p>
                   <p className="text-sm text-muted-foreground">{orders.length} total orders</p>
+                </div>
+              </div>
+              <span className="text-muted-foreground">→</span>
+            </Button>
+            
+            <Button 
+              variant="card" 
+              className="w-full justify-between p-4 h-auto"
+              onClick={() => setCurrentView("customerList")}
+            >
+              <div className="flex items-center gap-3">
+                <Users className="w-5 h-5 text-app-primary" />
+                <div className="text-left">
+                  <p className="font-medium">Customers</p>
+                  <p className="text-sm text-muted-foreground">{customers.length} total customers</p>
                 </div>
               </div>
               <span className="text-muted-foreground">→</span>
