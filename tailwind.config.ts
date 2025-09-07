@@ -63,16 +63,23 @@ export default {
           yellow: "hsl(var(--pwa-yellow))",
           gray: "hsl(var(--pwa-gray))",
         },
+        app: {
+          success: "hsl(var(--success-green))",
+          warning: "hsl(var(--warning-orange))",
+          egg: "hsl(var(--egg-yellow))",
+          farm: "hsl(var(--farm-brown))",
+        },
       },
       backgroundImage: {
-        "gradient-hero": "var(--gradient-hero)",
+        "gradient-primary": "var(--gradient-primary)",
+        "gradient-success": "var(--gradient-success)",
         "gradient-card": "var(--gradient-card)",
-        "gradient-feature": "var(--gradient-feature)",
+        "gradient-header": "var(--gradient-header)",
       },
       boxShadow: {
         "card": "var(--shadow-card)",
-        "feature": "var(--shadow-feature)",
-        "glow": "var(--shadow-glow)",
+        "button": "var(--shadow-button)",
+        "mobile": "var(--shadow-mobile)",
       },
       borderRadius: {
         lg: "var(--radius)",

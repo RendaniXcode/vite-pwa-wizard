@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* PWA-focused design system with teal/cyan color palette */
+/* Field Sales App Design System - Professional mobile-first design */
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
+    --background: 250 250% 99%;
     --foreground: 220 26% 14%;
 
     --card: 0 0% 100%;
@@ -15,40 +15,41 @@
     --popover: 0 0% 100%;
     --popover-foreground: 220 26% 14%;
 
-    --primary: 180 84% 25%;
+    --primary: 142 86% 28%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 220 13% 91%;
-    --secondary-foreground: 220 26% 14%;
+    --secondary: 142 20% 94%;
+    --secondary-foreground: 142 86% 16%;
 
-    --muted: 220 13% 91%;
+    --muted: 142 10% 95%;
     --muted-foreground: 220 9% 46%;
 
-    --accent: 188 95% 45%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 45 93% 47%;
+    --accent-foreground: 220 26% 14%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 180 84% 25%;
+    --border: 142 20% 88%;
+    --input: 142 20% 88%;
+    --ring: 142 86% 28%;
 
-    /* PWA Theme Colors */
-    --pwa-teal: 180 84% 25%;
-    --pwa-cyan: 188 95% 45%;
-    --pwa-yellow: 45 93% 58%;
-    --pwa-gray: 220 9% 46%;
+    /* App Theme Colors */
+    --success-green: 142 86% 28%;
+    --warning-orange: 25 95% 53%;
+    --egg-yellow: 45 93% 47%;
+    --farm-brown: 30 30% 35%;
 
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(180 84% 25%), hsl(188 95% 45%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 13% 96%));
-    --gradient-feature: linear-gradient(135deg, hsl(188 95% 45% / 0.1), hsl(180 84% 25% / 0.1));
+    --gradient-primary: linear-gradient(135deg, hsl(142 86% 28%), hsl(142 76% 36%));
+    --gradient-success: linear-gradient(135deg, hsl(142 86% 28%), hsl(142 96% 20%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(142 10% 98%));
+    --gradient-header: linear-gradient(180deg, hsl(142 86% 28%), hsl(142 76% 32%));
 
     /* Shadows */
-    --shadow-card: 0 4px 6px -1px hsl(220 13% 91% / 0.4), 0 2px 4px -1px hsl(220 13% 91% / 0.3);
-    --shadow-feature: 0 10px 25px -3px hsl(180 84% 25% / 0.1), 0 4px 6px -2px hsl(180 84% 25% / 0.05);
-    --shadow-glow: 0 0 40px hsl(188 95% 45% / 0.3);
+    --shadow-card: 0 4px 6px -1px hsl(142 86% 28% / 0.1), 0 2px 4px -1px hsl(142 86% 28% / 0.06);
+    --shadow-button: 0 4px 14px 0 hsl(142 86% 28% / 0.39);
+    --shadow-mobile: 0 2px 8px 0 hsl(142 86% 28% / 0.15);
 
     --radius: 0.5rem;
 
@@ -71,48 +72,49 @@
 
   .dark {
     --background: 220 26% 7%;
-    --foreground: 220 13% 91%;
+    --foreground: 142 20% 88%;
 
     --card: 220 26% 9%;
-    --card-foreground: 220 13% 91%;
+    --card-foreground: 142 20% 88%;
 
     --popover: 220 26% 9%;
-    --popover-foreground: 220 13% 91%;
+    --popover-foreground: 142 20% 88%;
 
-    --primary: 188 95% 45%;
+    --primary: 142 76% 36%;
     --primary-foreground: 220 26% 7%;
 
     --secondary: 220 26% 14%;
-    --secondary-foreground: 220 13% 91%;
+    --secondary-foreground: 142 20% 88%;
 
     --muted: 220 26% 14%;
     --muted-foreground: 220 9% 65%;
 
-    --accent: 180 84% 25%;
-    --accent-foreground: 220 13% 91%;
+    --accent: 45 93% 47%;
+    --accent-foreground: 220 26% 7%;
 
     --destructive: 0 62% 50%;
-    --destructive-foreground: 220 13% 91%;
+    --destructive-foreground: 142 20% 88%;
 
     --border: 220 26% 14%;
     --input: 220 26% 14%;
-    --ring: 188 95% 45%;
+    --ring: 142 76% 36%;
 
-    /* Dark mode PWA colors */
-    --pwa-teal: 188 95% 45%;
-    --pwa-cyan: 180 84% 55%;
-    --pwa-yellow: 45 93% 58%;
-    --pwa-gray: 220 9% 65%;
+    /* Dark theme colors */
+    --success-green: 142 76% 36%;
+    --warning-orange: 25 95% 53%;
+    --egg-yellow: 45 93% 47%;
+    --farm-brown: 30 40% 45%;
 
     /* Dark gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(188 95% 45%), hsl(180 84% 55%));
+    --gradient-primary: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 86% 28%));
+    --gradient-success: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 86% 20%));
     --gradient-card: linear-gradient(145deg, hsl(220 26% 9%), hsl(220 26% 12%));
-    --gradient-feature: linear-gradient(135deg, hsl(188 95% 45% / 0.15), hsl(180 84% 25% / 0.15));
+    --gradient-header: linear-gradient(180deg, hsl(142 76% 36%), hsl(142 86% 28%));
 
     /* Dark shadows */
     --shadow-card: 0 4px 6px -1px hsl(220 26% 7% / 0.6), 0 2px 4px -1px hsl(220 26% 7% / 0.4);
-    --shadow-feature: 0 10px 25px -3px hsl(188 95% 45% / 0.2), 0 4px 6px -2px hsl(188 95% 45% / 0.1);
-    --shadow-glow: 0 0 40px hsl(188 95% 45% / 0.4);
+    --shadow-button: 0 4px 14px 0 hsl(142 76% 36% / 0.4);
+    --shadow-mobile: 0 2px 8px 0 hsl(142 76% 36% / 0.2);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
