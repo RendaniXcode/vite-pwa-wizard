@@ -20,7 +20,19 @@ export default function Login() {
     setTimeout(() => {
       // Check if user exists in localStorage
       const users = JSON.parse(localStorage.getItem("users") || "[]");
-      const user = users.find((u: any) => u.email === email && u.password === password && u.verified);
+      let user = users.find((u: any) => u.email === email && u.password === password && u.verified);
+      
+      // Default test user
+      if (!user && email === "test@gmail.com" && password === "12345678") {
+        user = {
+          id: "test-user",
+          firstName: "Test",
+          lastName: "User", 
+          email: "test@gmail.com",
+          password: "12345678",
+          verified: true
+        };
+      }
 
       if (user) {
         localStorage.setItem("currentUser", JSON.stringify(user));
