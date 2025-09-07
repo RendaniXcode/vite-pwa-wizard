@@ -72,6 +72,14 @@ export default function SplashScreen() {
               >
                 Create Account
               </Button>
+              <Button 
+                onClick={() => navigate("/sales")}
+                variant="ghost"
+                className="w-full"
+                size="lg"
+              >
+                Continue without login
+              </Button>
             </div>
             
             <div className="text-xs text-muted-foreground">

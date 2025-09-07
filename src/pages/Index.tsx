@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MobileCard } from "@/components/MobileCard";
 import { StatCard } from "@/components/StatCard";
@@ -16,17 +17,29 @@ import {
   Plus, 
   History,
   ShoppingCart,
-  Egg
+  Egg,
+  LogIn,
+  Settings
 } from "lucide-react";
 
 type View = "dashboard" | "recordSale" | "createOrder" | "salesHistory" | "orderHistory" | "customerList" | "customerProfile";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [currentView, setCurrentView] = useState<View>("dashboard");
   const [sales, setSales] = useState<any[]>([]);
   const [orders, setOrders] = useState<any[]>([]);
   const [customers, setCustomers] = useState<any[]>([]);
   const [selectedCustomerId, setSelectedCustomerId] = useState<string>("");
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  // Check if user is logged in
+  useEffect(() => {
+    const user = localStorage.getItem("currentUser");
+    if (user) {
+      setCurrentUser(JSON.parse(user));
+    }
+  }, []);
 
   // Load data from localStorage on mount
   useEffect(() => {
@@ -174,9 +187,23 @@ const Index = () => {
               <p className="text-sm opacity-90">Egg Business Manager</p>
             </div>
           </div>
-          <div className="text-right">
-            <p className="text-sm opacity-90">Today</p>
-            <p className="text-lg font-bold">{new Date().toLocaleDateString()}</p>
+          <div className="flex items-center gap-2">
+            {currentUser ? (
+              <div className="text-right">
+                <p className="text-sm opacity-90">Welcome</p>
+                <p className="text-lg font-bold">{currentUser.firstName}</p>
+              </div>
+            ) : (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate("/login")}
+                className="text-primary-foreground hover:bg-white/20"
+              >
+                <LogIn className="w-4 h-4 mr-2" />
+                Login
+              </Button>
+            )}
           </div>
         </div>
       </header>
