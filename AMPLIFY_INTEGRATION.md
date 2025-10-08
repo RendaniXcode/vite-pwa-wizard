@@ -32,6 +32,92 @@ This document outlines the integration plan for deploying the Egg Sales Manageme
 
 ## Phase 1: AWS Infrastructure Setup (CDK)
 
+### 1.0 AWS Secrets Manager Setup
+
+Create a centralized secrets manager for all AWS credentials using CDK:
+
+```typescript
+// lib/secrets-stack.ts
+import * as cdk from 'aws-cdk-lib';
+import * as secretsmanager from 'aws-cdk-lib/aws-secretsmanager';
+import { Construct } from 'constructs';
+
+export class SecretsStack extends cdk.Stack {
+  public readonly appSecrets: secretsmanager.Secret;
+
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+    super(scope, id, props);
+
+    // Create AWS Secrets Manager secret for all app credentials
+    this.appSecrets = new secretsmanager.Secret(this, 'EggSalesAppSecrets', {
+      secretName: 'egg-sales-app/credentials',
+      description: 'AWS credentials for Egg Sales Management App',
+      secretObjectValue: {
+        cognitoUserPoolId: cdk.SecretValue.unsafePlainText(''),
+        cognitoClientId: cdk.SecretValue.unsafePlainText(''),
+        cognitoIdentityPoolId: cdk.SecretValue.unsafePlainText(''),
+        appSyncApiUrl: cdk.SecretValue.unsafePlainText(''),
+        appSyncApiKey: cdk.SecretValue.unsafePlainText(''),
+        awsRegion: cdk.SecretValue.unsafePlainText('us-east-1'),
+      },
+    });
+
+    // Output the secret ARN for reference
+    new cdk.CfnOutput(this, 'SecretsManagerArn', {
+      value: this.appSecrets.secretArn,
+      description: 'ARN of AWS Secrets Manager containing app credentials',
+      exportName: 'EggSalesAppSecretsArn',
+    });
+
+    new cdk.CfnOutput(this, 'SecretsManagerName', {
+      value: this.appSecrets.secretName,
+      description: 'Name of AWS Secrets Manager secret',
+      exportName: 'EggSalesAppSecretsName',
+    });
+  }
+}
+```
+
+**Update secrets after deploying other stacks:**
+
+```bash
+# Retrieve secret and update with actual values
+aws secretsmanager put-secret-value \
+  --secret-id egg-sales-app/credentials \
+  --secret-string '{
+    "cognitoUserPoolId": "us-east-1_XXXXXXXX",
+    "cognitoClientId": "abcdefghijklmnopqrstuvwxyz",
+    "cognitoIdentityPoolId": "us-east-1:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "appSyncApiUrl": "https://xxxxxxxxxxxxx.appsync-api.us-east-1.amazonaws.com/graphql",
+    "appSyncApiKey": "da2-xxxxxxxxxxxxxxxxxxxx",
+    "awsRegion": "us-east-1"
+  }'
+```
+
+**Retrieve secrets programmatically:**
+
+```typescript
+// src/utils/getSecrets.ts
+import { SecretsManagerClient, GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
+
+const client = new SecretsManagerClient({ region: "us-east-1" });
+
+export async function getAppSecrets() {
+  try {
+    const response = await client.send(
+      new GetSecretValueCommand({
+        SecretId: "egg-sales-app/credentials",
+      })
+    );
+    
+    return JSON.parse(response.SecretString || '{}');
+  } catch (error) {
+    console.error("Error retrieving secrets:", error);
+    throw error;
+  }
+}
+```
+
 ### 1.1 CDK Stack Components
 
 Create the following resources using AWS CDK:
