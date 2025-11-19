@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
+import StyleGuide from "./pages/StyleGuide";
 import SplashScreen from "./components/auth/SplashScreen";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/" element={<SplashScreen />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/sales" element={<Index />} />
+          <Route path="/style-guide" element={<StyleGuide />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/reset-password" element={<ResetPassword />} />
