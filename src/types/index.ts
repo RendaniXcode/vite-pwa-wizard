@@ -46,6 +46,7 @@ export interface Order {
   farmerName: string;
   quantity: number;
   notes?: string;
-  status: "pending" | "confirmed" | "delivered";
+  status: "pending" | "confirmed" | "delivered" | "cancelled" | "paused";
   date: string;
+  userRole?: "seller" | "farmer"; // Track who can perform actions
 }

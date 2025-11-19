@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import StyleGuide from "./pages/StyleGuide";
+import FarmerBackOffice from "./pages/FarmerBackOffice";
 import SplashScreen from "./components/auth/SplashScreen";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/sales" element={<Index />} />
           <Route path="/style-guide" element={<StyleGuide />} />
+          <Route path="/farmer-back-office" element={<FarmerBackOffice />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/reset-password" element={<ResetPassword />} />

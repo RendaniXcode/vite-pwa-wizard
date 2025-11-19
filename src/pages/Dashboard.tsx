@@ -91,34 +91,17 @@ export default function Dashboard() {
 
             <Card className="border-0 shadow-sm bg-card/50 backdrop-blur-sm">
               <CardHeader className="pb-3">
-                <CardTitle className="text-xl font-semibold">Customers</CardTitle>
+                <CardTitle className="text-xl font-semibold">Farmer Back Office</CardTitle>
               </CardHeader>
               <CardContent className="pt-0 space-y-4">
                 <p className="text-muted-foreground text-sm">
-                  Manage your customer base
+                  Manage incoming orders (Demo)
                 </p>
                 <Button 
-                  className="w-full h-12 bg-primary hover:bg-primary/90" 
-                  onClick={() => navigate("/customers")}
+                  className="w-full h-12 bg-app-success hover:bg-app-success/90 text-white" 
+                  onClick={() => navigate("/farmer-back-office")}
                 >
-                  View Customers
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-sm bg-card/50 backdrop-blur-sm">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-xl font-semibold">Orders</CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0 space-y-4">
-                <p className="text-muted-foreground text-sm">
-                  Track and manage orders
-                </p>
-                <Button 
-                  className="w-full h-12 bg-primary hover:bg-primary/90" 
-                  onClick={() => navigate("/orders")}
-                >
-                  View Orders
+                  Open Back Office
                 </Button>
               </CardContent>
             </Card>
