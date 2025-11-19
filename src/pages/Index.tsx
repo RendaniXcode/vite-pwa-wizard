@@ -146,6 +146,7 @@ const Index = () => {
         orders={orders}
         onBack={() => setCurrentView("dashboard")}
         onUpdateOrder={handleUpdateOrder}
+        userRole="seller"
       />
     );
   }
