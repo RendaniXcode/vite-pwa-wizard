@@ -50,7 +50,15 @@ export default function Dashboard() {
             <p className="text-muted-foreground text-sm">
               Here's your sales dashboard
             </p>
-            <div className="flex justify-end mt-4">
+            <div className="flex justify-end gap-2 mt-4">
+              <Button 
+                onClick={() => navigate("/style-guide")} 
+                variant="outline" 
+                size="sm"
+                className="text-xs"
+              >
+                Style Guide
+              </Button>
               <Button 
                 onClick={handleLogout} 
                 variant="outline" 
