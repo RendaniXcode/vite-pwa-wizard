@@ -60,7 +60,13 @@ export function OrderHistory({ orders, onBack, onUpdateOrder, userRole = "seller
   };
 
   const handleStatusChange = (order: Order, newStatus: Order["status"]) => {
-    const updatedOrder = { ...order, status: newStatus };
+    const now = new Date().toISOString();
+    const newEvent = { status: newStatus, timestamp: now, actor: userRole as "seller" | "farmer" };
+    const updatedOrder = {
+      ...order,
+      status: newStatus,
+      history: [...(order.history || []), newEvent],
+    };
     onUpdateOrder(updatedOrder);
   };
 
