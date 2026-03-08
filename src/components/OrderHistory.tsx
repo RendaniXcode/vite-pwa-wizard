@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { MobileCard } from "@/components/MobileCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { OrderDetailModal } from "@/components/OrderDetailModal";
 import { Clock, CheckCircle, Package, AlertCircle, XCircle, PauseCircle, ArrowLeft } from "lucide-react";
 import { Order } from "@/types";
 
