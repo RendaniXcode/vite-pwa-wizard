@@ -41,6 +41,13 @@ export interface Sale {
   notes?: string;
 }
 
+export interface OrderStatusEvent {
+  status: Order["status"];
+  timestamp: string;
+  actor: "seller" | "farmer" | "system";
+  note?: string;
+}
+
 export interface Order {
   id: string;
   farmerName: string;
@@ -48,5 +55,13 @@ export interface Order {
   notes?: string;
   status: "pending" | "confirmed" | "delivered" | "cancelled" | "paused";
   date: string;
-  userRole?: "seller" | "farmer"; // Track who can perform actions
+  userRole?: "seller" | "farmer";
+  productName?: string;
+  productSize?: string;
+  packSize?: string;
+  pricePerDozen?: number;
+  deliveryMethod?: string;
+  deliveryDate?: string;
+  paymentMethod?: string;
+  history?: OrderStatusEvent[];
 }
