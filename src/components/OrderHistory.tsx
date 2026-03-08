@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { MobileCard } from "@/components/MobileCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { OrderDetailModal } from "@/components/OrderDetailModal";
 import { Clock, CheckCircle, Package, AlertCircle, XCircle, PauseCircle, ArrowLeft } from "lucide-react";
 import { Order } from "@/types";
 
@@ -12,6 +14,8 @@ interface OrderHistoryProps {
 }
 
 export function OrderHistory({ orders, onBack, onUpdateOrder, userRole = "seller" }: OrderHistoryProps) {
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       month: "short",
@@ -195,7 +199,7 @@ export function OrderHistory({ orders, onBack, onUpdateOrder, userRole = "seller
         ) : (
           <div className="space-y-4">
             {orders.map((order) => (
-              <MobileCard key={order.id} className="hover:shadow-card transition-all">
+              <MobileCard key={order.id} className="hover:shadow-card transition-all cursor-pointer" onClick={() => setSelectedOrder(order)}>
                 <div className="space-y-3">
                   {/* Order Header */}
                   <div className="flex justify-between items-start">
@@ -250,6 +254,12 @@ export function OrderHistory({ orders, onBack, onUpdateOrder, userRole = "seller
           </div>
         )}
       </div>
+
+      <OrderDetailModal
+        order={selectedOrder}
+        open={!!selectedOrder}
+        onOpenChange={(open) => !open && setSelectedOrder(null)}
+      />
     </div>
   );
 }
