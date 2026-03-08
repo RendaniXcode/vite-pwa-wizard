@@ -42,19 +42,44 @@ export function CreateOrder({ onBack, onSave }: CreateOrderProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const now = new Date().toISOString();
+    const sizeMap: Record<string, string> = {
+      "small-18": "Small", "small-30": "Small",
+      "medium-18": "Medium", "medium-30": "Medium",
+      "large-18": "Large", "large-30": "Large",
+      "xl-18": "Extra Large", "xl-30": "Extra Large",
+      "jumbo-18": "Jumbo", "jumbo-30": "Jumbo",
+    };
+    const packMap: Record<string, string> = {
+      "small-18": "18-count", "small-30": "30-count",
+      "medium-18": "18-count", "medium-30": "30-count",
+      "large-18": "18-count", "large-30": "30-count",
+      "xl-18": "18-count", "xl-30": "30-count",
+      "jumbo-18": "18-count", "jumbo-30": "30-count",
+    };
+    const deliveryLabels: Record<string, string> = {
+      pickup: "Pickup at Farm",
+      delivery: "Home/Store Delivery",
+      meeting_point: "Meet at Agreed Point",
+    };
+
     const order = {
       id: Date.now().toString(),
-      supplierName: finalSupplier,
-      productVariantId: selectedProductId,
+      farmerName: finalSupplier,
       productName: selectedProduct?.name || "",
+      productSize: sizeMap[selectedProductId] || "",
+      packSize: packMap[selectedProductId] || "",
+      pricePerDozen: selectedProduct?.estimatedPrice || 0,
       quantity: orderQuantity,
-      deliveryOption,
-      paymentMethod,
-      deliveryDate,
-      estimatedTotal,
+      deliveryMethod: deliveryLabels[deliveryOption] || deliveryOption,
+      deliveryDate: deliveryDate || undefined,
+      paymentMethod: paymentMethod === "cash" ? "Cash on Delivery" : "Credit Terms",
       notes,
-      status: "pending",
-      date: new Date().toISOString(),
+      status: "pending" as const,
+      date: now,
+      history: [
+        { status: "pending" as const, timestamp: now, actor: "seller" as const, note: "Order created" },
+      ],
     };
     onSave(order);
     
