@@ -14,6 +14,8 @@ interface OrderHistoryProps {
 }
 
 export function OrderHistory({ orders, onBack, onUpdateOrder, userRole = "seller" }: OrderHistoryProps) {
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       month: "short",
