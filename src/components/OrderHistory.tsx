@@ -199,7 +199,7 @@ export function OrderHistory({ orders, onBack, onUpdateOrder, userRole = "seller
         ) : (
           <div className="space-y-4">
             {orders.map((order) => (
-              <MobileCard key={order.id} className="hover:shadow-card transition-all">
+              <MobileCard key={order.id} className="hover:shadow-card transition-all cursor-pointer" onClick={() => setSelectedOrder(order)}>
                 <div className="space-y-3">
                   {/* Order Header */}
                   <div className="flex justify-between items-start">
