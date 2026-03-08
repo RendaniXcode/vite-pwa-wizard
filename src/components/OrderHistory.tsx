@@ -254,6 +254,12 @@ export function OrderHistory({ orders, onBack, onUpdateOrder, userRole = "seller
           </div>
         )}
       </div>
+
+      <OrderDetailModal
+        order={selectedOrder}
+        open={!!selectedOrder}
+        onOpenChange={(open) => !open && setSelectedOrder(null)}
+      />
     </div>
   );
 }
